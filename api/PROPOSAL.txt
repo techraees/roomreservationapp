@@ -1,0 +1,13 @@
+QUESTION # 1
+Why express middleware are very important?
+    It enables to reach our req and res before sending anything to user.
+    next() is very important. 
+    If you call specific middleware function and inside you call next it will call next middleware in directory
+    app.use((req,res,next)=>{
+        console.log("HERE I AM MIDDLEWARE")
+    })
+
+QUESTION # 2
+What is error handling middleeware?
+    Hamare web application main ane wale error jese koi request handle ni ho sakti database se data fetch nhi hosakta un sab error ko manage
+    karne ka kam krta ha that occur in routes and other middleware functions
