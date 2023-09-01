@@ -1,0 +1,15 @@
+.skeletal-img {
+    width: 328px;
+    height: 250px;
+    margin-right: 20px;
+    border-radius: 10px;
+    background-color: #d0d0d0;
+    animation: skeletal 1s  ease infinite alternate;
+}
+
+@keyframes skeletal {
+    
+    to{
+        opacity: 0.5;
+    }
+}

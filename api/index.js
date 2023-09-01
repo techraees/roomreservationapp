@@ -1,6 +1,8 @@
 import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
+import cookieParser from "cookie-parser";
+import cors from "cors";
 
 // Importing Routes
 import usersRoute from "./routes/usersRoute.js";
@@ -11,6 +13,7 @@ import roomsRoute from "./routes/roomsRoute.js";
 const app = express();
 dotenv.config();
 
+console.log(process.env.MONGODB);
 const connect = async () => {
   try {
     await mongoose.connect(process.env.MONGODB);
@@ -24,7 +27,9 @@ mongoose.connection.on("disconnected", () => {
 });
 
 // Middlewares
+app.use(cors());
 app.use(express.json());
+app.use(cookieParser());
 
 app.use("/api/auth", authRoute);
 app.use("/api/users", usersRoute);
@@ -35,7 +40,12 @@ app.use("/api/rooms", roomsRoute);
 app.use((err, req, res, next) => {
   const errorStatus = err.status || 500;
   const errorMessage = err.message || "Something went wrong!";
-  return res.status(500).json("Hello Error Handler");
+  return res.status(errorStatus).json({
+    success: false,
+    status: errorStatus,
+    message: errorMessage,
+    stack: err.stack,
+  });
 });
 
 app.listen(8000, () => {
